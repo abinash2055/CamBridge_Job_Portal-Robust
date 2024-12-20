@@ -258,11 +258,18 @@ class AuthorCompanyController extends Controller
         if (!auth()->user()->company) {
 
             Alert::toast('You must create a company first!', 'info');
-            
+
             return redirect()->route('author.company.create');
         } else {
 
             return redirect()->route('author.company.edit', ['id' => auth()->user()->company->id]);
         }
+    }
+
+    public function getAllCompanies()
+    {
+        $companies = Company::all();
+
+        return view('author.job.companySelection', compact('companies'));
     }
 }

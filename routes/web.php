@@ -160,7 +160,7 @@ Route::group(['prefix' => 'author', 'middleware' => ['auth', 'role:author|admin'
 
   // for Job (Post) 
   Route::get('post/create', [AuthorPostController::class, 'create'])->name('author.post.create');
-  Route::get('/post/{id}', [AuthorPostController::class, 'show'])->name('author.post.show');  /////////////////////////////
+  Route::get('/post/{id}', [AuthorPostController::class, 'show'])->name('author.post.show');
   Route::post('/post', [AuthorPostController::class, 'store'])->name('author.post.store');
   Route::get('post/{post}/edit', [AuthorPostController::class, 'edit'])->name('author.post.edit');
   Route::put('post/{post}', [AuthorPostController::class, 'update'])->name('author.post.update');
@@ -174,6 +174,8 @@ Route::group(['prefix' => 'author', 'middleware' => ['auth', 'role:author|admin'
   Route::get('company/edit', [AuthorCompanyController::class, 'edit'])->name('author.company.edit');
   Route::put('company/{id}', [AuthorCompanyController::class, 'update'])->name('author.company.update');
   Route::delete('company', [AuthorCompanyController::class, 'destroy'])->name('author.company.destroy');
+  // For Company detials in filter
+  Route::get('companies', [AuthorCompanyController::class, 'getAllCompanies'])->name('author.companies');
 });
 
 
@@ -193,8 +195,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin']], func
   Route::get('view-all-posts', [AdminPostController::class, 'index'])->name('admin.post.viewAll');
   Route::post('view-all-posts/{id}', [AdminPostController::class, 'destroyPost'])->name('admin.post.destroy');
   Route::post('toggle-post-status', [AdminPostController::class, 'toggleStatus'])->name('admin.post.toggleStatus');
-  // Route::get('/author/post/{id}', [AuthorPostController::class, 'show'])->name('author.post.show');  /////////////////////////////////
-
 
   // For category
   Route::get('category/{category}/edit', [AdminCompanyCategoryController::class, 'edit'])->name('admin.category.edit');

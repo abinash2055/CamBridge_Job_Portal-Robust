@@ -3,9 +3,8 @@
 @section('content')
     <div class="account-layout border">
         <div class="account-hdr bg-primary text-white border">
-            Pending Applications
+            Company Selection
         </div>
-
         <div class="account-bdy p-3">
             @if ($errors->any())
                 <div class="alert alert-danger">
@@ -16,7 +15,6 @@
                     </ul>
                 </div>
             @endif
-
             @if ($pendingApplications && $pendingApplications->count())
                 <table class="table table-hover">
                     <thead>
@@ -29,22 +27,21 @@
                             <th>Status</th>
                         </tr>
                     </thead>
-
                     <tbody>
-                        @foreach ($pendingApplications as $application)
+                        @foreach ($companySelections as $companySelection)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ optional($application->user)->name }}</td>
-                                <td>{{ optional($application->user)->email }}</td>
-                                <td>{{ optional($application->post)->job_title }}</td>
-                                <td>{{ $application->created_at }}</td>
-                                <td>{{ ucfirst($application->status) }}</td>
+                                <td>{{ optional($companySelection->user)->name }}</td>
+                                <td>{{ optional($companySelection->user)->email }}</td>
+                                <td>{{ optional($companySelection->post)->job_title }}</td>
+                                <td>{{ $companySelection->created_at }}</td>
+                                <td>{{ ucfirst($companySelection->status) }}</td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
             @else
-                <p class="alert alert-info">No pending applications found.</p>
+                <p class="alert alert-info">No Applications applied till now.</p>
             @endif
         </div>
     </div>

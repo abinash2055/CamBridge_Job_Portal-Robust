@@ -6,7 +6,7 @@
             Job Application Details
         </div>
         <div class="account-bdy p-3">
-             @if ($errors->any())
+            @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
                         @foreach ($errors->all() as $error)
@@ -15,7 +15,7 @@
                     </ul>
                 </div>
             @endif
-            
+
             <p class="alert alert-primary">
                 User named <span class="text-capitalize">{{ optional($applicant)->name }}</span> applied for your listing
                 on {{ $application->created_at }}
@@ -40,17 +40,18 @@
                                     <p class="my-2"><i class="fas fa-envelope"></i> Email:
                                         {{ optional($applicant)->email }}</p>
 
-                                    <a href="mailto:{{ optional($applicant)->email }}" class="btn primary-btn"
+                                    <a href="mailto:{{ optional($applicant)->email }}" class="btn primary-btn "
                                         title="Click to send email">Send Email</a>
 
                                     {{-- For CV View  --}}
 
-                                    <a href="{{ asset($applicant->cv_path) }}" class="btn btn-success"
-                                        title="Click to view CV">View CV</a>
+                                    <a href="{{ asset($applicant->cv_path) }}"
+                                        class="btn btn-success"title="Click to view CV">
+                                        <i class="fas fa-file-pdf me-2"></i> View CV</a>
 
 
                                     <!-- Status Dropdown -->
-                                    <form action="{{ route('author.jobApplication.saveStatus') }}" method="POST"
+                                    {{-- <form action="{{ route('author.jobApplication.saveStatus') }}" method="POST"
                                         id="statusForm">
                                         @csrf
                                         <div class="mt-3">
@@ -76,6 +77,31 @@
                                             <input type="hidden" name="application_id" value="{{ $application->id }}">
                                             <button type="submit" class="btn primary-outline-btn mt-2 px-2">Save</button>
                                         </div>
+                                    </form> --}}
+
+                                    {{-- new form  --}}
+                                    <form action="{{ route('author.jobApplication.saveStatus') }}" method="POST"
+                                        id="statusForm" class="mt-4">
+                                        @csrf
+                                        <div class="mt-3">
+                                            <label for="status" class="form-label text-muted">Update Status:</label>
+                                            <div class="input-group">
+                                                <select name="status" id="status" class="form-select form-select-lg">
+                                                    <option value="pending"
+                                                        {{ $application->status == 'pending' ? 'selected' : '' }}>Pending
+                                                    </option>
+                                                    <option value="shortlisted"
+                                                        {{ $application->status == 'shortlisted' ? 'selected' : '' }}>
+                                                        Shortlisted</option>
+                                                    <option value="rejected"
+                                                        {{ $application->status == 'rejected' ? 'selected' : '' }}>Rejected
+                                                    </option>
+                                                </select>
+                                                <button type="submit"
+                                                    class="btn btn-outline-primary input-group-text px-4">Save</button>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" name="application_id" value="{{ $application->id }}">
                                     </form>
                                 </div>
                             </div>
@@ -122,32 +148,61 @@
 
 <script>
     document.getElementById('status-select').addEventListener('change', function() {
-                const status = this.value;
-                const applicationId = this.dataset.applicationId;
-                fetch('{{ route('author.jobApplication.saveStatus') }}', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        },
-                        body: JSON.stringify({
-                            application_id: applicationId,
-                            status
-                        })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            // Update the status in the index page
-                            const statusElement = document.getElementById('status-' + applicationId);
-                            if (statusElement) {
-                                statusElement.textContent = data.status.charAt(0).toUpperCase() + data.status.slice(
-                                    1);
-                            }
-                            alert('Status updated to: ' + data.status);
-                        } else {
-                            alert('Error updating status: ' + data.message);
-                        }
-                    })
-                    .catch(error => console.error('Error:', error));
+        const status = this.value;
+        const applicationId = this.dataset.applicationId;
+        fetch('{{ route('author.jobApplication.saveStatus') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({
+                    application_id: applicationId,
+                    status: status
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Update the status in the index page
+                    const statusElement = document.getElementById('status-' + applicationId);
+                    if (statusElement) {
+                        statusElement.textContent = data.status.charAt(0).toUpperCase() + data.status.slice(
+                            1);
+                    }
+                    alert('Status updated to: ' + data.status);
+                } else {
+                    alert('Error updating status: ' + data.message);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    });
 </script>
+
+<style>
+    /* Custom Button Styling */
+    .btn-lg {
+        font-size: 1.125rem;
+        padding: 0.75rem 1.5rem;
+        border-radius: 50px;
+    }
+
+    /* Status Dropdown */
+    .form-select-lg {
+        border-radius: 8px;
+        padding: 0.75rem;
+    }
+
+    .input-group-text {
+        border-radius: 8px;
+    }
+
+    .btn-outline-primary {
+        border-radius: 8px;
+    }
+
+    .btn-primary {
+        border-radius: 50px;
+        padding: 0.75rem 1.25rem;
+    }
+</style>
