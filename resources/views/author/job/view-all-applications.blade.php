@@ -6,7 +6,7 @@
             Job Applications
         </div>
         <div class="account-bdy p-3">
-            @if ($errors->any())
+             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
                         @foreach ($errors->all() as $error)
@@ -15,7 +15,7 @@
                     </ul>
                 </div>
             @endif
-
+            
             <div class="row">
                 <div class="col-sm-12 col-md-12">
                     <p class="mb-3 alert alert-primary">Listing all the Applicants who applied for your <strong>job
@@ -23,66 +23,26 @@
 
                     {{-- all Application, Shortlisted and Rejected part --}}
                     <div class="d-flex">
-
-                        {{-- All Applications --}}
                         <a href="{{ route('author.job.applications.index') }}" class="btn btn-primary me-3"
                             aria-label="View all applications">
                             All Applications
                         </a>
-
-                        {{-- Pending Applications --}}
                         <a href="{{ route('author.job.applications.pending') }}" class="btn btn-warning me-3"
                             aria-label="View pending applications">
                             Pending Applications
                         </a>
-
-                        {{-- Shortlisted Applications --}}
                         <a href="{{ route('author.job.applications.shortlisted') }}" class="btn btn-success me-3"
                             aria-label="View shortlisted applications">
                             Shortlisted Applications
                         </a>
-
-                        {{-- Rejected Applications --}}
                         <a href="{{ route('author.job.applications.rejected') }}" class="btn btn-danger"
                             aria-label="View rejected applications">
                             Rejected Applications
                         </a>
                     </div>
-
-                    <div class="d-flex mb-3">
-                        {{-- Extra Button --}}
-                        <a href="{{ route('author.job.applications.extraFeature') }}" class="btn btn-info me-3"
-                            aria-label="Extra Feature">
-                            Extra Feature
-                        </a>
-
-                        {{-- All Applications --}}
-                        <a href="{{ route('author.job.applications.index') }}" class="btn btn-primary me-3"
-                            aria-label="View all applications">
-                            All Applications
-                        </a>
-
-                        {{-- Pending Applications --}}
-                        <a href="{{ route('author.job.applications.pending') }}" class="btn btn-warning me-3"
-                            aria-label="View pending applications">
-                            Pending Applications
-                        </a>
-
-                        {{-- Shortlisted Applications --}}
-                        <a href="{{ route('author.job.applications.shortlisted') }}" class="btn btn-success me-3"
-                            aria-label="View shortlisted applications">
-                            Shortlisted Applications
-                        </a>
-
-                        {{-- Rejected Applications --}}
-                        <a href="{{ route('author.job.applications.rejected') }}" class="btn btn-danger"
-                            aria-label="View rejected applications">
-                            Rejected Applications
-                        </a>
-                    </div>
-
 
                     <div id="application-data">
+
                         <div class="table-responsive pt-3">
                             <table class="table table-hover table-striped small">
                                 <thead>
@@ -133,12 +93,14 @@
                                                             value="{{ $application->id }}">
                                                         <button type="submit" class="btn btn-danger">Reject</button>
                                                         {{-- <td>
-                                                    <form action="#" method="POST" class="d-inline-block">
+                                                    <form
+                                                        action="#"
+                                                        method="POST" class="d-inline-block">
                                                         @csrf
                                                         @method('PATCH')
                                                         <input type="hidden" name="application_id"
                                                             value="{{ $application->id }}">
-                                                        <button type="submit" class="btn danger-btn">Delete</button>
+                                                    <button type="submit" class="btn danger-btn">Delete</button>
                                                 </td> --}}
                                                     </form>
                                                 </td>
@@ -167,6 +129,8 @@
                 </div>
             </div>
         </div>
+        <br>
+        <br>
         <br>
         <br>
         <br>

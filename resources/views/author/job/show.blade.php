@@ -49,60 +49,36 @@
                                         class="btn btn-success"title="Click to view CV">
                                         <i class="fas fa-file-pdf me-2"></i> View CV</a>
 
+                                    <br>
+                                    <br>
 
                                     <!-- Status Dropdown -->
-                                    {{-- <form action="{{ route('author.jobApplication.saveStatus') }}" method="POST"
-                                        id="statusForm">
+                                    <form action="{{ route('author.jobApplication.saveStatus') }}" method="POST"
+                                        id="statusForm" class="p-4 border rounded shadow-sm bg-light">
                                         @csrf
-                                        <div class="mt-3">
-                                            <label for="status" class="form-label">Update Status:</label>
-                                            <select name="status" id="status" class="form-select">
+                                        <div class="form-group">
+                                            <label for="status" class="font-weight-bold">Update Status:</label>
+                                            <select name="status" id="status" class="form-control">
                                                 <option value="pending"
-                                                    {{ $application->status == 'pending' ? 'selected' : '' }}>
-                                                    Pending
+                                                    {{ $application->status == 'pending' ? 'selected' : '' }}>Pending
                                                 </option>
-
                                                 <option value="shortlisted"
                                                     {{ $application->status == 'shortlisted' ? 'selected' : '' }}>
-                                                    Shortlisted
-                                                </option>
-
+                                                    Shortlisted</option>
                                                 <option value="rejected"
-                                                    {{ $application->status == 'rejected' ? 'selected' : '' }}>
-                                                    Rejected
+                                                    {{ $application->status == 'rejected' ? 'selected' : '' }}>Rejected
                                                 </option>
-
                                             </select>
-
-                                            <input type="hidden" name="application_id" value="{{ $application->id }}">
-                                            <button type="submit" class="btn primary-outline-btn mt-2 px-2">Save</button>
-                                        </div>
-                                    </form> --}}
-
-                                    {{-- new form  --}}
-                                    <form action="{{ route('author.jobApplication.saveStatus') }}" method="POST"
-                                        id="statusForm" class="mt-4">
-                                        @csrf
-                                        <div class="mt-3">
-                                            <label for="status" class="form-label text-muted">Update Status:</label>
-                                            <div class="input-group">
-                                                <select name="status" id="status" class="form-select form-select-lg">
-                                                    <option value="pending"
-                                                        {{ $application->status == 'pending' ? 'selected' : '' }}>Pending
-                                                    </option>
-                                                    <option value="shortlisted"
-                                                        {{ $application->status == 'shortlisted' ? 'selected' : '' }}>
-                                                        Shortlisted</option>
-                                                    <option value="rejected"
-                                                        {{ $application->status == 'rejected' ? 'selected' : '' }}>Rejected
-                                                    </option>
-                                                </select>
-                                                <button type="submit"
-                                                    class="btn btn-outline-primary input-group-text px-4">Save</button>
-                                            </div>
                                         </div>
                                         <input type="hidden" name="application_id" value="{{ $application->id }}">
+                                        <div class="text-right">
+                                            <button type="submit"
+                                                class="btn btn-primary btn-lg mt-3 px-4 shadow-sm d-flex align-items-center">
+                                                <i class="fas fa-save mr-2"></i> Save
+                                            </button>
+                                        </div>
                                     </form>
+
                                 </div>
                             </div>
                         </div>
@@ -178,31 +154,3 @@
             .catch(error => console.error('Error:', error));
     });
 </script>
-
-<style>
-    /* Custom Button Styling */
-    .btn-lg {
-        font-size: 1.125rem;
-        padding: 0.75rem 1.5rem;
-        border-radius: 50px;
-    }
-
-    /* Status Dropdown */
-    .form-select-lg {
-        border-radius: 8px;
-        padding: 0.75rem;
-    }
-
-    .input-group-text {
-        border-radius: 8px;
-    }
-
-    .btn-outline-primary {
-        border-radius: 8px;
-    }
-
-    .btn-primary {
-        border-radius: 50px;
-        padding: 0.75rem 1.25rem;
-    }
-</style>

@@ -5,7 +5,6 @@
         <div class="account-hdr bg-primary text-white border">
             Pending Applications
         </div>
-
         <div class="account-bdy p-3">
             @if ($errors->any())
                 <div class="alert alert-danger">
@@ -16,7 +15,6 @@
                     </ul>
                 </div>
             @endif
-
             @if ($pendingApplications && $pendingApplications->count())
                 <table class="table table-hover">
                     <thead>
@@ -29,7 +27,6 @@
                             <th>Status</th>
                         </tr>
                     </thead>
-
                     <tbody>
                         @foreach ($pendingApplications as $application)
                             <tr>

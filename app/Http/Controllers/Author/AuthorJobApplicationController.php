@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Author;
 
 use App\Http\Controllers\Controller;
+use App\Mail\ApplicationStatusShortlisted;
+use App\Mail\ApplicationStatusRejected;
 use App\Models\JobApplication;
 use App\Models\User;
 use App\Models\Post;
@@ -10,6 +12,7 @@ use Carbon\Carbon;
 use App\Models\CompanyCategory;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Mail;
 
 class AuthorJobApplicationController extends Controller
 {
@@ -112,6 +115,18 @@ class AuthorJobApplicationController extends Controller
 
         $application->status = 'rejected';
         $application->save();
+        $data = [
+            'user' => $application->user->name,
+            'userEmail' => $application->user->email,
+            'application' => $application->status,
+            'applicationDate' => $application->created_at,
+            'jobPost' => $application->post->job_title,
+        ];
+        if ($application->status === 'rejected') {
+
+            Mail::to($data['userEmail'])->send(new ApplicationStatusRejected($data));
+            // dd('Email sent');
+        }
 
         return redirect()->route('author.jobApplication.index');
 
@@ -154,7 +169,25 @@ class AuthorJobApplicationController extends Controller
             $application->status = $status;
             $application->save();
 
-            Alert::toast('Status updated successfully.', 'success');
+            $data = [
+                'user' => $application->user->name,
+                'userEmail' => $application->user->email,
+                'application' => $application->status,
+                'applicationDate' => $application->created_at,
+                'jobPost' => $application->post->job_title,
+            ];
+
+            if ($status === 'shortlisted') {
+                // Send verification email
+                Mail::to($data['userEmail'])->send(new ApplicationStatusShortlisted($data));
+                // dd('Email sent');
+            } elseif ($status === 'rejected') {
+
+                Mail::to($data['userEmail'])->send(new ApplicationStatusRejected($data));
+                // dd('Email sent');
+            }
+
+            Alert::toast('Status updated and email successfully.', 'success');
 
             return redirect()->route('author.jobApplication.index');
         }

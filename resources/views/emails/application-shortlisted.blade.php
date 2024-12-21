@@ -1,20 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Application Status - Rejected</title>
+    <title>Congratulations! You've been Shortlisted</title>
 </head>
 
 <body>
-    <h1>Dear {{ $data['user'] }},</h1>
-    <p>We regret to inform you that your application for the job "{{ $data['jobTitle'] }}" has been
-        <strong>rejected</strong>.</p>
+    <h1>Congratulations, {{ $data['user'] }}!</h1>
+    <p>We are pleased to inform you that your application for the job "{{ $data['jobPost'] }}" has been
+        <strong>shortlisted</strong>.
+    </p>
     <p><strong>Application Date:</strong> {{ $data['applicationDate'] }}</p>
 
-    <p>Thank you for your interest, and we wish you all the best for your future endeavors.</p>
+    <p>We will contact you soon regarding the next steps.</p>
+
+    <p>Thank you for your interest in our company.</p>
 
     <p>Best Regards,<br>Cambridge InfoTech Pvt. Ltd.</p>
 

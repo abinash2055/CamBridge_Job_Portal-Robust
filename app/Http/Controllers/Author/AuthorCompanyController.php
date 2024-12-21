@@ -258,7 +258,7 @@ class AuthorCompanyController extends Controller
         if (!auth()->user()->company) {
 
             Alert::toast('You must create a company first!', 'info');
-
+            
             return redirect()->route('author.company.create');
         } else {
 

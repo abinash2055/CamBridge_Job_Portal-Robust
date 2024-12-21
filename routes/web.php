@@ -4,13 +4,10 @@ use App\Http\Controllers\WebController;
 use App\Http\Controllers\User\AccountController;
 use App\Http\Controllers\User\savedJobController;
 use App\Http\Controllers\User\ProfileController;
-
 use App\Http\Controllers\Author\AuthorController;
 use App\Http\Controllers\Author\AuthorCompanyController;
-use App\Http\Controllers\Author\AuthorApplicationStatusController;
 use App\Http\Controllers\Author\AuthorJobApplicationController;
 use App\Http\Controllers\Author\AuthorPostController;
-
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\AdminPostController;
@@ -19,12 +16,20 @@ use App\Http\Controllers\Admin\AdminCompanyCategoryController;
 use App\Http\Controllers\Admin\AdminCompanyController;
 use App\Http\Controllers\Admin\AdminFaqCategoryController;
 use App\Http\Controllers\Admin\AdminFaqController;
-
 use App\Http\Controllers\AuthenticationController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Support\Facades\Artisan;
 
-
+//One time use for creating storage symlink
+// Route::get('/create-symlink', function () {
+//   try {
+//     Artisan::call('storage:link');
+//     return response()->json(['message' => 'Symlink created successfully!'], 200);
+//   } catch (\Exception $e) {
+//     return response()->json(['error' => 'Failed to create symlink.', 'details' => $e->getMessage()], 500);
+//   }
+// });
 
 //Public routes
 Route::get('/', [WebController::class, 'index'])->name('home.index');
@@ -164,7 +169,7 @@ Route::group(['prefix' => 'author', 'middleware' => ['auth', 'role:author|admin'
 
   // for Job (Post) 
   Route::get('post/create', [AuthorPostController::class, 'create'])->name('author.post.create');
-  Route::get('/post/{id}', [AuthorPostController::class, 'show'])->name('author.post.show');
+  Route::get('/post/{id}', [AuthorPostController::class, 'show'])->name('author.post.show');  /////////////////////////////
   Route::post('/post', [AuthorPostController::class, 'store'])->name('author.post.store');
   Route::get('post/{post}/edit', [AuthorPostController::class, 'edit'])->name('author.post.edit');
   Route::put('post/{post}', [AuthorPostController::class, 'update'])->name('author.post.update');
@@ -178,12 +183,6 @@ Route::group(['prefix' => 'author', 'middleware' => ['auth', 'role:author|admin'
   Route::get('company/edit', [AuthorCompanyController::class, 'edit'])->name('author.company.edit');
   Route::put('company/{id}', [AuthorCompanyController::class, 'update'])->name('author.company.update');
   Route::delete('company', [AuthorCompanyController::class, 'destroy'])->name('author.company.destroy');
-  // For Company detials in filter
-  Route::get('companies', [AuthorCompanyController::class, 'getAllCompanies'])->name('author.companies');
-
-  // For Status of Job Application
-  Route::get('/author/job/{jobId}/status', [AuthorApplicationStatusController::class, 'checkStatus'])
-    ->name('author.job.checkStatus');
 });
 
 
@@ -203,6 +202,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin']], func
   Route::get('view-all-posts', [AdminPostController::class, 'index'])->name('admin.post.viewAll');
   Route::post('view-all-posts/{id}', [AdminPostController::class, 'destroyPost'])->name('admin.post.destroy');
   Route::post('toggle-post-status', [AdminPostController::class, 'toggleStatus'])->name('admin.post.toggleStatus');
+  // Route::get('/author/post/{id}', [AuthorPostController::class, 'show'])->name('author.post.show');  /////////////////////////////////
+
 
   // For category
   Route::get('category/{category}/edit', [AdminCompanyCategoryController::class, 'edit'])->name('admin.category.edit');
