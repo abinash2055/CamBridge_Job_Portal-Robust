@@ -191,12 +191,4 @@ class AuthorPostController extends Controller
 
         return view('author.view-all-jobs', compact('activeJobs', 'dashCount', 'jobCategories'));
     }
-
-    // For Company Selection
-    public function showCompanySelection()
-    {
-        // Fetch all companies
-        $companies = Company::all();
-        return view('author.job.companySelection', compact('companies'));
-    }
 }

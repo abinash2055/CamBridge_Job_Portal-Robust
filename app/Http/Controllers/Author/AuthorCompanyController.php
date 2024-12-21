@@ -265,11 +265,4 @@ class AuthorCompanyController extends Controller
             return redirect()->route('author.company.edit', ['id' => auth()->user()->company->id]);
         }
     }
-
-    public function getAllCompanies()
-    {
-        $companies = Company::all();
-
-        return view('author.job.companySelection', compact('companies'));
-    }
 }

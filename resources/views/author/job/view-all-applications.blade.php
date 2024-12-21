@@ -24,12 +24,6 @@
                     {{-- all Application, Shortlisted and Rejected part --}}
                     <div class="d-flex">
 
-                        {{-- Filter Buttons --}}
-                        <a href="{{ route('author.job.applications.index') }}" class="btn btn-primary me-3"
-                            aria-label="View all applications">
-                            Filter by Company
-                        </a>
-
                         {{-- All Applications --}}
                         <a href="{{ route('author.job.applications.index') }}" class="btn btn-primary me-3"
                             aria-label="View all applications">

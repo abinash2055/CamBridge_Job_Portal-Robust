@@ -4,10 +4,13 @@ use App\Http\Controllers\WebController;
 use App\Http\Controllers\User\AccountController;
 use App\Http\Controllers\User\savedJobController;
 use App\Http\Controllers\User\ProfileController;
+
 use App\Http\Controllers\Author\AuthorController;
 use App\Http\Controllers\Author\AuthorCompanyController;
+use App\Http\Controllers\Author\AuthorApplicationStatusController;
 use App\Http\Controllers\Author\AuthorJobApplicationController;
 use App\Http\Controllers\Author\AuthorPostController;
+
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\AdminPostController;
@@ -16,6 +19,7 @@ use App\Http\Controllers\Admin\AdminCompanyCategoryController;
 use App\Http\Controllers\Admin\AdminCompanyController;
 use App\Http\Controllers\Admin\AdminFaqCategoryController;
 use App\Http\Controllers\Admin\AdminFaqController;
+
 use App\Http\Controllers\AuthenticationController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -176,6 +180,10 @@ Route::group(['prefix' => 'author', 'middleware' => ['auth', 'role:author|admin'
   Route::delete('company', [AuthorCompanyController::class, 'destroy'])->name('author.company.destroy');
   // For Company detials in filter
   Route::get('companies', [AuthorCompanyController::class, 'getAllCompanies'])->name('author.companies');
+
+  // For Status of Job Application
+  Route::get('/author/job/{jobId}/status', [AuthorApplicationStatusController::class, 'checkStatus'])
+    ->name('author.job.checkStatus');
 });
 
 

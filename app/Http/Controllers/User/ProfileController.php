@@ -26,7 +26,6 @@ class ProfileController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . Auth::id(),
             'password' => 'nullable|string|min:8|confirmed',
             'date_of_birth' => 'nullable|date',
             'location' => 'nullable|string|max:255',
@@ -38,7 +37,6 @@ class ProfileController extends Controller
         $user = Auth::user();
 
         $user->name = $request->name;
-        $user->email = $request->email;
         $user->date_of_birth = $request->date_of_birth;
         $user->location = $request->location;
         $user->education = $request->education;

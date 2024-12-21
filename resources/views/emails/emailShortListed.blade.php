@@ -2,29 +2,23 @@
 <html>
 
 <head>
-    <title>Application Status: Rejected</title>
-    <style>
-        .footer {
-            text-align: center;
-            margin-top: 30px;
-            font-size: 14px;
-            color: #999;
-        }
-
-        .footer a {
-            color: #0867ec;
-            text-decoration: none;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Congratulations! You've been Shortlisted</title>
 </head>
 
 <body>
-    <h1>Application Status: Rejected</h1>
-    <p>Dear {{ $user->name }},</p>
-    <p>We regret to inform you that your application for the position of <strong>{{ $post->title }}</strong> has not
-        been successful at this time. We appreciate your interest in the position and encourage you to apply for future
-        opportunities with us.</p>
-    <p>Thank you again for your time and effort.</p>
+    <h1>Congratulations, {{ $data['user'] }}!</h1>
+    <p>We are pleased to inform you that your application for the job "{{ $data['jobTitle'] }}" has been
+        <strong>shortlisted</strong>.
+    </p>
+    <p><strong>Application Date:</strong> {{ $data['applicationDate'] }}</p>
+
+    <p>We will contact you soon regarding the next steps.</p>
+
+    <p>Thank you for your interest in our company.</p>
+
+    <p>Best Regards,<br>Cambridge InfoTech Pvt. Ltd.</p>
 
     <!-- Footer -->
     <div class="footer">
