@@ -52,6 +52,7 @@ class User extends Authenticatable
         'date_of_birth' => 'date',
     ];
 
+    // For Company Details/ Title
     public function company()
     {
         return $this->hasOne('App\Models\Company');
@@ -63,6 +64,7 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Models\Post');
     }
 
+    // For Applied Post
     public function applied()
     {
         return $this->hasMany('App\Models\JobApplication');

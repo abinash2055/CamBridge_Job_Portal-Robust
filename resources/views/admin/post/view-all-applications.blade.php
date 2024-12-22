@@ -19,6 +19,27 @@
             <div class="row">
                 <div class="col-sm-12 col-md-12">
                     <div class="table-responsive pt-3">
+
+                        {{-- Category search --}}
+                        @if (!is_null($companies))
+                            <form method="GET" action="{{ route('admin.post.viewAll') }}" id="companyChangeForm">
+                                <div class="form-group">
+                                    <label for="company" class="font-weight-bold">Select a Company</label>
+                                    <select id="company" name="company_id" class="form-control border-primary shadow"
+                                        onchange="changeCompany()">
+                                        <option value="" disabled {{ !request('company_id') ? 'selected' : '' }}>
+                                            Choose a company</option>
+                                        @foreach ($companies as $company)
+                                            <option value="{{ $company->id }}"
+                                                {{ request('company_id') == $company->id ? 'selected' : '' }}>
+                                                {{ $company->title }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </form>
+                        @endif
+
                         <table class="table table-hover table-striped small">
                             <thead>
                                 <tr>
@@ -69,10 +90,20 @@
                                 @endif
                             </tbody>
                         </table>
-                    </div>
+                        <!-- Display Posts with Pagination -->
+                        <div class="posts">
+                            @foreach ($posts as $post)
+                                <div class="post">
+                                    <h5>{{ $post->title }}</h5>
+                                </div>
+                            @endforeach
+                        </div>
 
-                    <div class="d-flex justify-content-center mt-4 custom-pagination">
-                        {{ $posts->links() }}
+                        <!-- Pagination Links -->
+                        <div class="pagination d-flex justify-content-center">
+                            {{ $posts->appends(['company_id' => request('company_id')])->links() }}
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -123,5 +154,10 @@
                 });
             });
         });
+    </script>
+    <script>
+        function changeCompany() {
+            document.getElementById('companyChangeForm').submit();
+        }
     </script>
 @endpush

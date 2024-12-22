@@ -6,7 +6,7 @@
             Job Applications
         </div>
         <div class="account-bdy p-3">
-             @if ($errors->any())
+            @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
                         @foreach ($errors->all() as $error)
@@ -19,6 +19,37 @@
                 <div class="col-sm-12 col-md-12">
                     <p class="mb-3 alert alert-primary">Listing all the Applicants who applied for your <strong>job
                             listings</strong>.</p>
+
+                    {{-- Category search --}}
+                    {{-- @if (!is_null($companies))
+                        <form method="GET" action="{{ route('author.job.index') }}" id="companyChangeForm">
+                            <div class="form-group">
+                                <label for="company" class="font-weight-bold">Select a Company</label>
+                                <select id="company" name="company_id" class="form-control border-primary shadow"
+                                    onchange="changeCompany()">
+                                    <option value="" disabled {{ !request('company_id') ? 'selected' : '' }}>
+                                        Choose a company</option>
+                                    @foreach ($companies as $company)
+                                        <option value="{{ $company->id }}"
+                                            {{ request('company_id') == $company->id ? 'selected' : '' }}>
+                                            {{ $company->title }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </form>
+                    @endif --}}
+
+                    <div class="form-group">
+                        <label for="jobTitle" class="font-weight-bold">Select a Job Title</label>
+                        <select id="jobTitle" name="jobTitle" class="form-control border-primary shadow">
+                            <option value="" disabled selected>Choose a company</option>
+                            <option value="1">Company AA</option>
+                            <option value="2">Company BB</option>
+                            <option value="3">Company CC</option>
+                        </select>
+                    </div>
+
 
                     {{-- all Application, Shortlisted and Rejected part --}}
                     <div class="d-flex">

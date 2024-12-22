@@ -4,18 +4,25 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Post;
+use App\Models\Company;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class AdminPostController extends Controller
 {
-    public function index()
-    {
-        // $posts = Post::where('status', 'active')->paginate(10);
+    public function index(Request $request)
+    {   
+        $companies = Company::orderBy('title', 'asc')->get(['id', 'title']);
+        
+        // Check if company_id is selected
+        if ($request->has('company_id') && !empty($request->input('company_id'))) {
+            $company_id = $request->input('company_id');
+            $posts = Post::where('company_id', $company_id)->paginate(10);
+        } else {
+            $posts = Post::paginate(10);
+        }
 
-        $posts = Post::paginate(10);
-
-        return view('admin.post.view-all-applications', compact('posts'));
+        return view('admin.post.view-all-applications', compact('posts', 'companies'));
     }
 
     public function toggleStatus(Request $request)

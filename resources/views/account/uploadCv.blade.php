@@ -20,17 +20,23 @@
                 </ul>
             </div>
         @endif
-
-        <form action="{{ route('account.storeCv') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('account.storeCv') }}" method="POST" enctype="multipart/form-data"
+            class="p-4 border rounded shadow-sm bg-light">
             @csrf
             <div class="form-group">
                 <label for="cv" class="font-weight-bold">Upload Your CV</label>
-                <input type="file" name="cv" id="cv" class="form-control" accept="application/pdf" required>
+                <div class="custom-file mt-2">
+                    <input type="file" name="cv" id="cv" class="custom-file-input" accept="application/pdf"
+                        required>
+                    <label class="custom-file-label" for="cv">Choose file...</label>
+                </div>
                 @error('cv')
-                    <span class="text-danger">{{ $message }}</span>
+                    <small class="text-danger d-block mt-2">{{ $message }}</small>
                 @enderror
             </div>
-            <button type="submit" class="btn btn-primary mt-3">Upload</button>
+            <button type="submit" class="btn btn-primary btn-block mt-4">
+                <i class="fas fa-upload"></i> Upload CV
+            </button>
         </form>
     </div>
 @endsection

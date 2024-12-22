@@ -247,4 +247,5 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role:admin']], func
   Route::put('faqs/update/{id}', [AdminFaqController::class, 'update'])->name('faqs.update');
   Route::get('faqs/view/{id}', [AdminFaqController::class, 'show'])->name('faqs.show');
   Route::delete('faqs/destroy/{id}', [AdminFaqController::class, 'destroy'])->name('faqs.destroy');
+
 });
