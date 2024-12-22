@@ -7,6 +7,7 @@ use App\Mail\ApplicationStatusShortlisted;
 use App\Mail\ApplicationStatusRejected;
 use App\Models\JobApplication;
 use App\Models\User;
+use App\Models\Company;
 use App\Models\Post;
 use Carbon\Carbon;
 use App\Models\CompanyCategory;
@@ -16,19 +17,15 @@ use Illuminate\Support\Facades\Mail;
 
 class AuthorJobApplicationController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $applicationsWithPostAndUser = collect();
         $company = auth()->user()->company;
-
-        if ($company) {
-            $ids =  $company->posts()->pluck('id');
-            $applications = JobApplication::whereIn('post_id', $ids);
-            $applicationsWithPostAndUser = $applications->with('user', 'post')->latest()->paginate(10);
-        }
+        $jobPosts = Post::where('company_id', auth()->user()->company->id)->with('company', 'company.user')->get();
 
         return view('author.job.index')->with([
             'applications' => $applicationsWithPostAndUser,
+            'posts' => $jobPosts,  // Pass posts to the view for the dropdown
         ]);
     }
 
@@ -125,7 +122,6 @@ class AuthorJobApplicationController extends Controller
         if ($application->status === 'rejected') {
 
             Mail::to($data['userEmail'])->send(new ApplicationStatusRejected($data));
-            // dd('Email sent');
         }
 
         return redirect()->route('author.jobApplication.index');
@@ -135,12 +131,10 @@ class AuthorJobApplicationController extends Controller
 
     public function jobList()
     {
-        // Get the authenticated user
         $user = auth()->user();
 
-        // Get the active jobs where the company_id matches the user's company_id
         $activeJobs = Post::with('company')->whereHas('company', function ($query) use ($user) {
-            $query->where('user_id', $user->id); // Ensure the job's company_id matches the user's user_id
+            $query->where('user_id', $user->id); 
         })
             ->oldest() // Order by oldest
             ->paginate(10);

@@ -20,35 +20,26 @@
                     <p class="mb-3 alert alert-primary">Listing all the Applicants who applied for your <strong>job
                             listings</strong>.</p>
 
-                    {{-- Category search --}}
-                    {{-- @if (!is_null($companies))
-                        <form method="GET" action="{{ route('author.job.index') }}" id="companyChangeForm">
+                    {{-- Category search  --}}
+                    @if (!is_null($posts))
+                        <form method="GET" action="{{ route('author.jobApplication.index') }}" id="companyChangeForm">
                             <div class="form-group">
-                                <label for="company" class="font-weight-bold">Select a Company</label>
-                                <select id="company" name="company_id" class="form-control border-primary shadow"
-                                    onchange="changeCompany()">
-                                    <option value="" disabled {{ !request('company_id') ? 'selected' : '' }}>
-                                        Choose a company</option>
-                                    @foreach ($companies as $company)
-                                        <option value="{{ $company->id }}"
-                                            {{ request('company_id') == $company->id ? 'selected' : '' }}>
-                                            {{ $company->title }}
+                                <label for="job_title" class="font-weight-bold">Select a Job Title</label>
+                                <select id="job_title" name="job_title" class="form-control border-primary shadow"
+                                    onchange="this.form.submit()">
+                                    <option value="" disabled {{ !request('job_title') ? 'selected' : '' }}>
+                                        Choose a Job Title
+                                    </option>
+                                    @foreach ($posts as $post)
+                                        <option value="{{ $post->job_title }}"
+                                            {{ request('job_title') == $post->job_title ? 'selected' : '' }}>
+                                            {{ $post->job_title }}
                                         </option>
                                     @endforeach
                                 </select>
                             </div>
                         </form>
-                    @endif --}}
-
-                    <div class="form-group">
-                        <label for="jobTitle" class="font-weight-bold">Select a Job Title</label>
-                        <select id="jobTitle" name="jobTitle" class="form-control border-primary shadow">
-                            <option value="" disabled selected>Choose a company</option>
-                            <option value="1">Company AA</option>
-                            <option value="2">Company BB</option>
-                            <option value="3">Company CC</option>
-                        </select>
-                    </div>
+                    @endif
 
 
                     {{-- all Application, Shortlisted and Rejected part --}}
@@ -216,4 +207,10 @@
             });
         }
     });
+</script>
+
+<script>
+    function changeJobTitle() {
+        document.getElementById('jobTitleChangeForm').submit();
+    }
 </script>

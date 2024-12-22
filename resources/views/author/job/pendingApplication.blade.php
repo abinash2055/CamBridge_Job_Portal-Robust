@@ -15,6 +15,7 @@
                     </ul>
                 </div>
             @endif
+
             @if ($pendingApplications && $pendingApplications->count())
                 <table class="table table-hover">
                     <thead>
