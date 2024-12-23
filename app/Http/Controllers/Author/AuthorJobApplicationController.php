@@ -19,15 +19,29 @@ class AuthorJobApplicationController extends Controller
 {
     public function index(Request $request)
     {
-        $applicationsWithPostAndUser = collect();
+        // Fetch the current user's company
         $company = auth()->user()->company;
-        $jobPosts = Post::where('company_id', auth()->user()->company->id)->with('company', 'company.user')->get();
+        $jobPosts = Post::where('company_id', $company->id)->with('company', 'company.user')->orderBy('id', 'desc')->get();
+        
+        // Fetch job posts associated with the company
+        $applicationsWithPostAndUser = collect();
 
+        // Check if a job ID is provided in the request
+        if(isset($_GET['job_id']) && !empty($_GET['job_id']))
+        {
+            $job_id = $request->input('job_id');
+
+            // Fetch all applications for the selected job post
+            $applicationsWithPostAndUser = JobApplication::where('post_id', $job_id)->orderBy('id', 'desc')->get();
+        }
+
+        // Return the view with the all applications and job posts
         return view('author.job.index')->with([
             'applications' => $applicationsWithPostAndUser,
-            'posts' => $jobPosts,  // Pass posts to the view for the dropdown
+            'posts' => $jobPosts,  
         ]);
     }
+
 
     public function show($id)
     {
@@ -61,7 +75,7 @@ class AuthorJobApplicationController extends Controller
         }
 
         // Get the company related to the post, if exists
-        $company = optional($post)->company()->first(); // Use optional in case $post or company is null
+        $company = optional($post)->company()->first(); 
 
         // Return the view with the data
         return view('author.job.show')->with([
@@ -82,28 +96,57 @@ class AuthorJobApplicationController extends Controller
         return response()->json(['success' => 'User deleted successfully.']);
     }
 
-    public function pending()
+    public function pending(Request $request)
     {
-        $pendingApplications = JobApplication::where('status', 'pending')->get();
+        $company = auth()->user()->company;
+        $jobPosts = Post::where('company_id', $company->id)->with('company', 'company.user')->orderBy('id', 'desc')->get();
+        
+        $pendingApplications = collect();
 
-        return view('author.job.pendingApplication', compact('pendingApplications'));
+        if(isset($_GET['job_id']) && !empty($_GET['job_id']))
+        {
+            $job_id = $request->input('job_id');
+            $pendingApplications = JobApplication::where('post_id', $job_id)->orderBy('id', 'desc')->where('status', 'pending')->get();
+        }
+
+        return view('author.job.pendingApplication')->with(['applications' => $pendingApplications, 'posts' => $jobPosts,
+    ]);
     }
 
     // ShortListed Application
-    public function showShortListed()
+    public function showShortListed(Request $request)
     {
-        $shortlistedApplications = JobApplication::where('status', 'shortlisted')->get();
+    $company = auth()->user()->company;
+    $jobPosts = Post::where('company_id', $company->id)->with('company', 'company.user')->orderBy('id', 'desc')->get();
 
-        return view('author.job.shortListedApplication', compact('shortlistedApplications'));
+    $shortlistedApplications = collect();
+
+    if (isset($_GET['job_id']) && !empty($_GET['job_id'])) {
+        $job_id = $request->input('job_id');
+
+        $shortlistedApplications = JobApplication::where('post_id', $job_id)->where('status', 'shortlisted')->orderBy('id', 'desc')->get();
     }
+
+    return view('author.job.shortListedApplication')->with(['applications' => $shortlistedApplications,'posts' => $jobPosts,
+    ]);
+}
 
     // Rejected Application
-    public function rejected()
+    public function rejected(Request $request)
     {
-        $rejectedApplications = JobApplication::where('status', 'rejected')->get();
+    $company = auth()->user()->company;
+    $jobPosts = Post::where('company_id', $company->id)->with('company', 'company.user')->orderBy('id', 'desc')->get();
 
-        return view('author.job.rejectApplication', compact('rejectedApplications'));
+    $rejectedApplications = collect();
+
+    if (isset($_GET['job_id']) && !empty($_GET['job_id'])) {
+        $job_id = $request->input('job_id');
+        $rejectedApplications = JobApplication::where('post_id', $job_id)->where('status', 'rejected')->orderBy('id', 'desc')->get();
     }
+
+    return view('author.job.rejectApplication')->with(['applications' => $rejectedApplications, 'posts' => $jobPosts,
+    ]);
+}
 
     // For reject button in index page
     public function reject($id)

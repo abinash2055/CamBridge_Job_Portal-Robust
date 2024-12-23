@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="account-layout border">
-        <div class="account-hdr bg-primary text-white border">
+        <div class="account-hdr bg-success text-white border">
             Shortlisted Applications
         </div>
         <div class="account-bdy p-3">
@@ -16,7 +16,9 @@
                 </div>
             @endif
 
-            @if ($shortlistedApplications && $shortlistedApplications->count())
+            @include('author.job.jobapplicationfilter')
+
+            @if ($applications && $applications->count())
                 <table class="table table-hover">
                     <thead>
                         <tr>
@@ -29,7 +31,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($shortlistedApplications as $application)
+                        @foreach ($applications as $application)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $application->user->name }}</td>

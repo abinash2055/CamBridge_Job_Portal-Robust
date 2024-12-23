@@ -16,7 +16,10 @@
                 </div>
             @endif
 
-            @if ($rejectedApplications && $rejectedApplications->count())
+            @include('author.job.jobapplicationfilter')
+
+
+            @if ($applications && $applications->count())
                 <table class="table table-hover">
                     <thead>
                         <tr>
@@ -29,7 +32,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($rejectedApplications as $application)
+                        @foreach ($applications as $application)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $application->user->name }}</td>

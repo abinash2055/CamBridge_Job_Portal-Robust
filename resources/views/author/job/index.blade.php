@@ -15,52 +15,13 @@
                     </ul>
                 </div>
             @endif
+
             <div class="row">
                 <div class="col-sm-12 col-md-12">
                     <p class="mb-3 alert alert-primary">Listing all the Applicants who applied for your <strong>job
                             listings</strong>.</p>
 
-                    {{-- Category search  --}}
-                    @if (!is_null($posts))
-                        <form method="GET" action="{{ route('author.jobApplication.index') }}" id="companyChangeForm">
-                            <div class="form-group">
-                                <label for="job_title" class="font-weight-bold">Select a Job Title</label>
-                                <select id="job_title" name="job_title" class="form-control border-primary shadow"
-                                    onchange="this.form.submit()">
-                                    <option value="" disabled {{ !request('job_title') ? 'selected' : '' }}>
-                                        Choose a Job Title
-                                    </option>
-                                    @foreach ($posts as $post)
-                                        <option value="{{ $post->job_title }}"
-                                            {{ request('job_title') == $post->job_title ? 'selected' : '' }}>
-                                            {{ $post->job_title }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </form>
-                    @endif
-
-
-                    {{-- all Application, Shortlisted and Rejected part --}}
-                    <div class="d-flex">
-                        <a href="{{ route('author.job.applications.index') }}" class="btn btn-primary me-3"
-                            aria-label="View all applications">
-                            All Applications
-                        </a>
-                        <a href="{{ route('author.job.applications.pending') }}" class="btn btn-warning me-3"
-                            aria-label="View pending applications">
-                            Pending Applications
-                        </a>
-                        <a href="{{ route('author.job.applications.shortlisted') }}" class="btn btn-success me-3"
-                            aria-label="View shortlisted applications">
-                            Shortlisted Applications
-                        </a>
-                        <a href="{{ route('author.job.applications.rejected') }}" class="btn btn-danger"
-                            aria-label="View rejected applications">
-                            Rejected Applications
-                        </a>
-                    </div>
+                    @include('author.job.jobapplicationfilter')
 
                     <div id="application-data">
 
@@ -144,8 +105,8 @@
 
                         {{-- Page Number Pagination --}}
                         {{-- <div class="d-flex justify-content-center mt-4 custom-pagination">
-                        {{ $applications && $applications->links() }}
-                    </div> --}}
+                            {{ $applications && $applications->links() }}
+                        </div> --}}
                     </div>
                 </div>
             </div>
