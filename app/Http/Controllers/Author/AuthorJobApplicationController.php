@@ -32,9 +32,8 @@ class AuthorJobApplicationController extends Controller
             $job_id = $request->input('job_id');
 
             // Fetch all applications for the selected job post
-            $applicationsWithPostAndUser = JobApplication::where('post_id', $job_id)->orderBy('id', 'desc')->get();
+            $applicationsWithPostAndUser = JobApplication::where('post_id', $job_id)->orderBy('id', 'desc')->paginate(10);
         }
-
         // Return the view with the all applications and job posts
         return view('author.job.index')->with([
             'applications' => $applicationsWithPostAndUser,
@@ -106,7 +105,7 @@ class AuthorJobApplicationController extends Controller
         if(isset($_GET['job_id']) && !empty($_GET['job_id']))
         {
             $job_id = $request->input('job_id');
-            $pendingApplications = JobApplication::where('post_id', $job_id)->orderBy('id', 'desc')->where('status', 'pending')->get();
+            $pendingApplications = JobApplication::where('post_id', $job_id)->orderBy('id', 'desc')->where('status', 'pending')->paginate(10);
         }
 
         return view('author.job.pendingApplication')->with(['applications' => $pendingApplications, 'posts' => $jobPosts,
@@ -124,7 +123,7 @@ class AuthorJobApplicationController extends Controller
     if (isset($_GET['job_id']) && !empty($_GET['job_id'])) {
         $job_id = $request->input('job_id');
 
-        $shortlistedApplications = JobApplication::where('post_id', $job_id)->where('status', 'shortlisted')->orderBy('id', 'desc')->get();
+        $shortlistedApplications = JobApplication::where('post_id', $job_id)->where('status', 'shortlisted')->orderBy('id', 'desc')->paginate(10);
     }
 
     return view('author.job.shortListedApplication')->with(['applications' => $shortlistedApplications,'posts' => $jobPosts,
@@ -141,7 +140,7 @@ class AuthorJobApplicationController extends Controller
 
     if (isset($_GET['job_id']) && !empty($_GET['job_id'])) {
         $job_id = $request->input('job_id');
-        $rejectedApplications = JobApplication::where('post_id', $job_id)->where('status', 'rejected')->orderBy('id', 'desc')->get();
+        $rejectedApplications = JobApplication::where('post_id', $job_id)->where('status', 'rejected')->orderBy('id', 'desc')->paginate(10);
     }
 
     return view('author.job.rejectApplication')->with(['applications' => $rejectedApplications, 'posts' => $jobPosts,

@@ -48,5 +48,14 @@
                 <p class="alert alert-info">No rejected applications found.</p>
             @endif
         </div>
+        <!-- Display Job Posts Pagination -->
+        <div class="flex justify-center mt-8">
+            {{ $posts->links() }}
+        </div>
+
+        <!-- Display Job Applications Pagination -->
+        <div class="flex justify-center mt-8">
+            {{ $applications->links() }}
+        </div>
     </div>
 @endsection
