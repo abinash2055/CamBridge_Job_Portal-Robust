@@ -1,6 +1,6 @@
 # ----- ROBUST INFORMATION TECHNOLOGY -----
 # About Cambridge Infotech Job Portal
-ambridge Infotech Job Portal is made with laravel 8 and vue js. <br/>
+Cambridge Infotech Job Portal is made with laravel 8 and vue js. <br/>
 Having user,author,admin role and permissions <br/>
 Live : [Click Me](https://jobs.cambridge.com.np) <br/>
 
@@ -79,36 +79,8 @@ border="0" /></a>
 > ~php artisan migrate:fresh <br />
 > ~php artisan db:seed <br /> > <br />
 
+
 ## 5. Serve application
 
 > ~php artisan serve <br />
 
-
-## 6.  FOR ENVIRONMENT FILE CODE
-
-APP_NAME=Cambridge
-APP_ENV=local
-APP_KEY=base64:hZ6US4EN+ZWsxk1MGv9EcJ4Gqg/KF1iRfJTR5Fvm/kU=
-APP_DEBUG=true
-APP_URL=http://localhost
-
-CONTACT_FORM_EMAIL_ADDRESS="contact@example.com"
-
-LOG_CHANNEL=stack
-
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=laravel_job_portal_2
-DB_USERNAME=root
-DB_PASSWORD=root
-
-BROADCAST_DRIVER=log
-CACHE_DRIVER=file
-QUEUE_CONNECTION=sync
-SESSION_DRIVER=file
-SESSION_LIFETIME=120
-
-REDIS_HOST=127.0.0.1
-REDIS_PASSWORD=null
-REDIS_PORT=6379
