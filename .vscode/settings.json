@@ -1,0 +1,5 @@
+{
+    "extensions.ignoreRecommendations": true,
+    "git.showPushSuccessNotification": true,
+    "git.supportCancellation": true
+}
